@@ -15,23 +15,12 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="BitonicSort.hlsl">
-      <Filter>资源文件</Filter>
-    </FxCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="BitonicSort.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="d3dx12.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="helper_compute.h">
+    <ClInclude Include="BitonicSortApp.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BitonicSort.cpp">
+    <ClCompile Include="BitonicSortApp.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">

@@ -1,29 +1,15 @@
-#include <iostream>
-#include <vector>
-#include <random>
-#include "BitonicSort.h"
+#include "BitonicSortApp.h"
 
-int main(void)
-{
-  std::vector<int> xs(10);
-  std::random_device rd;
-  std::mt19937 rng(rd());
-  std::uniform_int_distribution<int> unf(0, 9);
-  for (int i = 0; i < xs.size(); i++)
-    xs[i] = unf(rng);
-  printf("before sort: ");
-  for (int i = 0; i < xs.size(); i++)
-    printf("%d ", xs[i]);
-  printf("\n");
+int main(void) {
+  // Enable run-time memory check for debug builds.
+#if defined(DEBUG) | defined(_DEBUG)
+  _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+#endif
 
-  BitonicSort bitonic;
-  bitonic.Init();
-  bitonic.Run(xs.data(), static_cast<UINT>(xs.size()));
-  bitonic.Destroy();
-
-  printf("after sort: ");
-  for (int i = 0; i < xs.size(); i++)
-    printf("%d ", xs[i]);
-  printf("\n");
-  return 0;
+  try {
+    BitonicSortApp{}.Run();
+  } catch (DxException &e) {
+    MessageBox(nullptr, e.ToString().c_str(), L"HR Failed", MB_OK);
+    return 0;
+  }
 }

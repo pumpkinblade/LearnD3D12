@@ -1,17 +1,19 @@
-#define LENGTH 1024
+#ifndef VECTOR_LENGTH
+#define VECTOR_LENGTH 16
+#endif
 
 RWStructuredBuffer<int> xs : register(u0);
 
-groupshared int workplace[LENGTH];
+groupshared int workplace[VECTOR_LENGTH];
 
-[numthreads(LENGTH / 2, 1, 1)]
+[numthreads(VECTOR_LENGTH / 2, 1, 1)]
 void main(uint3 gtid : SV_GroupThreadID)
 {
-  for (uint i = gtid.x; i < LENGTH; i += LENGTH / 2)
+  for (uint i = gtid.x; i < VECTOR_LENGTH; i += VECTOR_LENGTH / 2)
     workplace[i] = xs[i];
   GroupMemoryBarrierWithGroupSync();
   
-  for (uint d = 0; (1 << d) < LENGTH; d++)
+  for (uint d = 0; (1 << d) < VECTOR_LENGTH; d++)
   {
     for (uint offset = (1 << d), dircnt = 1; offset > 0; offset >>= 1, dircnt <<= 1)
     {
@@ -28,6 +30,6 @@ void main(uint3 gtid : SV_GroupThreadID)
     }
   }
 
-  for (uint i = gtid.x; i < LENGTH; i += LENGTH / 2)
+  for (uint i = gtid.x; i < VECTOR_LENGTH; i += VECTOR_LENGTH / 2)
     xs[i] = workplace[i];
 }
