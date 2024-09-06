@@ -15,13 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="helper_compute.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="SimpleCompute.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="d3dx12.h">
+    <ClInclude Include="SimpleComputeApp.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
@@ -29,13 +23,8 @@
     <ClCompile Include="main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="SimpleCompute.cpp">
+    <ClCompile Include="SimpleComputeApp.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <FxCompile Include="SimpleCompute.hlsl">
-      <Filter>资源文件</Filter>
-    </FxCompile>
   </ItemGroup>
 </Project>

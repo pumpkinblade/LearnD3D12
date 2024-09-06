@@ -1,26 +1,18 @@
 #include <iostream>
 #include <vector>
-#include "SimpleCompute.h"
+#include "SimpleComputeApp.h"
 
 int main(void)
 {
-  std::vector<float> in1(1 << 26);
-  std::vector<float> in2(1 << 26);
-  std::vector<float> out(1 << 26);
-  float alpha = 5;
-  for (int i = 0; i < out.size(); i++)
-  {
-    in1[i] = 1.f;
-    in2[i] = 10.f;
+  // Enable run-time memory check for debug builds.
+#if defined(DEBUG) | defined(_DEBUG)
+  _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+#endif
+
+  try {
+    SimpleComputeApp{}.Run();
+  } catch (DxException &e) {
+    MessageBox(nullptr, e.ToString().c_str(), L"HR Failed", MB_OK);
+    return 0;
   }
-
-  SimpleCompute compute;
-  compute.Init();
-  compute.Run(out.data(), in1.data(), in2.data(), alpha, static_cast<UINT>(out.size()));
-  compute.Destroy();
-
-  for (int i = 0; i < 16; i++)
-    printf("%f ", out[i]);
-  printf("\n");
-  return 0;
 }
