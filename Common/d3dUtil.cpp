@@ -113,13 +113,34 @@ ComPtr<ID3DBlob> d3dUtil::CompileShader(
 	return byteCode;
 }
 
+ComPtr<ID3D12RootSignature> d3dUtil::CreateRootSignature(
+  ID3D12Device *device,
+  UINT numParams,
+  const D3D12_ROOT_PARAMETER *params) 
+{
+  ComPtr<ID3D12RootSignature> rootSignature;
+  CD3DX12_ROOT_SIGNATURE_DESC desc(numParams, params);
+
+  ComPtr<ID3DBlob> blob, error;
+  ThrowIfFailed(D3D12SerializeRootSignature(&desc, D3D_ROOT_SIGNATURE_VERSION_1,
+                                            &blob, &error));
+  ThrowIfFailed(device->CreateRootSignature(0, blob->GetBufferPointer(),
+                                            blob->GetBufferSize(),
+                                            IID_PPV_ARGS(&rootSignature)));
+  return rootSignature;
+}
+
 std::wstring DxException::ToString()const
 {
     // Get the string description of the error code.
     _com_error err(ErrorCode);
     std::wstring msg = err.ErrorMessage();
+    std::wostringstream woss;
+    woss << FunctionName << L" failed in " << Filename << L":" << LineNumber;
+    woss << L" with error " << std::hex << ErrorCode;
+    woss << L"(" << msg << L")";
 
-    return FunctionName + L" failed in " + Filename + L"; line " + std::to_wstring(LineNumber) + L"; error: " + msg;
+    return woss.str();
 }
 
 

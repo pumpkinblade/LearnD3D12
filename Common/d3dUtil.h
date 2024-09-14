@@ -126,6 +126,11 @@ public:
 		const D3D_SHADER_MACRO* defines,
 		const std::string& entrypoint,
 		const std::string& target);
+
+  static Microsoft::WRL::ComPtr<ID3D12RootSignature> d3dUtil::CreateRootSignature(
+    ID3D12Device *device,
+    UINT numParams,
+    const D3D12_ROOT_PARAMETER *params);
 };
 
 class DxException
