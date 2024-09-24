@@ -46,10 +46,9 @@ void WaveSimulator::Update(const GameTimer& gt, ID3D12GraphicsCommandList* cmdLi
 		// TODO: ±ß½çÎÊÌâ
 		cmdList->Dispatch(mNumRows / 16, mNumCols / 16, 1);
 
-		auto tempRes = mPrevSln;
-		mPrevSln = mCurrSln;
-		mCurrSln = mNextSln;
-		mNextSln = tempRes;
+		// prev -> curr -> next
+    mNextSln.Swap(mPrevSln);
+    mCurrSln.Swap(mPrevSln);
 
 		auto tempSrvView = mPrevSlnSrvView;
 		mPrevSlnSrvView = mCurrSlnSrvView;
